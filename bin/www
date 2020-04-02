@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('hello-ms:server');
+var debug = require('debug')('goodby-js:server');
 var http = require('http');
 
 /**
