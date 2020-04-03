@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   res.setHeader('Content-Type', 'application/json');
   let user = req.body
-  console.log(user);
+  mongoose.connection.
   res.status(200).end(JSON.stringify(user));
 });
 
