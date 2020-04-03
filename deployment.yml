@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-ms-deployment
+  labels:
+    app: hello-ms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-ms
+  template:
+    metadata:
+      labels:
+        app: hello-ms
+    spec:
+      containers:
+      - name: hello-ms
+        image: facundor/test:hello-ms
+        ports:
+        - containerPort: 3000
