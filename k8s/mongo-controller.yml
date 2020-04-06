@@ -2,14 +2,14 @@ apiVersion: v1
 kind: ReplicationController
 metadata:
   labels:
-    name: mongo
-  name: mongo-controller
+    name: mongo-ctrl
+  name: mongo-replication-ctrl
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: mongo
+        name: mongo-controller
     spec:
       containers:
       - image: mongo

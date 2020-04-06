@@ -19,3 +19,6 @@ spec:
         image: facundor/test:hello-ms
         ports:
         - containerPort: 3000
+        env:
+        - name: DB_CONNECTION
+          value: "mongodb://mongo-service:27017"
