@@ -4,6 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var cors = require('cors');
 // Environment variables
 require('dotenv/config');
 
@@ -28,6 +29,7 @@ mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedT
 );
 
 // middleware
+app.use(cors())
 app.use(function(req, res, next) {
   next(createError(404));
 });
