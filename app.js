@@ -24,9 +24,14 @@ var usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
 
 // connecto to db
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true }, () =>
-  console.log("connected to db")
-);
+console.log("DB_CONNECTION: " + process.env.DB_CONNECTION);
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true });
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function() {
+  // we're connected!
+  console.log("Connection DB Success!")
+});
 
 // middleware
 app.use(cors())
