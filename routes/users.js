@@ -3,29 +3,34 @@ const router = express.Router();
 const User = require("../model/User");
 
 /* GET users listing. */
-router.get("/", function (req, res, next) {
-  res.setHeader("Content-Type", "application/json");
-  let user = { name: "Charles", surname: "Darwin" };
-  res.status(200).json(user);
+router.get("/", async (req, res) => {
+
+  try{
+    const users = await User.find();
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).json(users);
+  } catch (err) {
+    console.log("error get:" + err)
+    res.status(500).json({ message: err });
+  }
+  
 });
 
 /* POST user. */
-router.post("/", function (req, res, next) {
+router.post("/", async (req, res) => {
   const user = User({
     name: req.body.name,
     surname: req.body.surname,
   });
 
-  user
-    .save()
-    .then((data) => {
+  try{
+      const userSaved = await user.save();
       res.setHeader("Content-Type", "application/json");
-      res.status(200).json(data);
-    })
-    .catch((err) => {
-      console.log("error: " + err);
-      res.json({ message: err });
-    });
+      res.status(200).json(userSaved);
+    } catch(err){
+      console.log("error post: " + err);
+      res.status(500).json({ message: err });
+    }
 });
 
 module.exports = router;
