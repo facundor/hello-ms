@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: hello-ms
-        image: facundor/test:hello-ms
+        image: facundor/hello-ms:1.0.1
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
