@@ -5,7 +5,7 @@ metadata:
   labels:
     app: hello-ms-dpl
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hello-ms
@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
       - name: hello-ms
-        image: facundor/hello-ms:1.0.1
+        image: facundor/hello-ms:1.0.4
         imagePullPolicy: Always
         ports:
-        - containerPort: 3000
+        - containerPort: 4000
         env:
         - name: DB_CONNECTION
           value: "mongodb://mongo-service:27017"
