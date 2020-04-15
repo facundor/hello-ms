@@ -1,9 +1,34 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../model/User");
+const fetch = require("node-fetch");
+
+const verifyCatpcha = async (req, res, next) => {
+  const secret_key = process.env.CAPTCHA_SECRET_KEY;
+  const token = req.headers["g-recaptcha-response"];
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret_key}&response=${token}`;
+
+  console.log("captcha full url: " + url);
+
+  req.captcha = await fetch(url, {
+    method: "post",
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      return json;
+    });
+
+  console.log("google catpcha score: " + req.captcha.score);
+
+  if (req.captcha.score > 0.5) {
+    next();
+  } else {
+    res.status(403).json({message:"not authorized"});
+  }
+};
 
 // GET users listing.
-router.get("/", async (req, res) => {
+router.get("/", verifyCatpcha, async (req, res) => {
   try {
     const users = await User.find();
     res.setHeader("Content-Type", "application/json");
